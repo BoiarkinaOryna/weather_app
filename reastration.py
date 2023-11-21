@@ -1,5 +1,6 @@
 import customtkinter
 import sys
+import sqlite3
 app = customtkinter.CTk()
 app.config(bg = "#5DA7B1")
 width = app.winfo_screenwidth()
@@ -113,6 +114,25 @@ entry4 = customtkinter.CTkEntry(
 
 entry4.place(x = 20, y = 500)
     
+    
+def save():
+    db = sqlite3.connect("database.db")
+    cursor = db.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS Users (country TEXT, city TEXT, name TEXT, surname TEXT)")
+    
+    text_country = entry1.get()
+    text_city = entry2.get()
+    text_name = entry3.get()
+    text_surname = entry4.get()
+    cursor.execute(f"INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
+    
+
+    db.commit()
+    db.close()
+    print("1")
+    app.destroy()
+    
+
 button = customtkinter.CTkButton(
     master = app,
     border_width = 2, 
@@ -120,8 +140,8 @@ button = customtkinter.CTkButton(
     bg_color = "#5DA7B1",
     fg_color = "#096C82",
     text = "Зберегти",
-    corner_radius = 50
-    # command = 
+    corner_radius = 50,
+    command = save
 )
 button.place(x = 165, y = 570)
 
