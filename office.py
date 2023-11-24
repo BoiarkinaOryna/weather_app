@@ -1,4 +1,6 @@
 import customtkinter
+import sqlite3
+# import regestration
 
 app = customtkinter.CTk()
 app.config(bg = "#5DA7B1")
@@ -7,6 +9,16 @@ height = app.winfo_screenheight()
 
 app.geometry(f"460x645x{width}x{height}")
 app.title("Особистий кабінет")
+
+db = sqlite3.connect("database.db")
+cursor = db.cursor()
+
+def select(name_column: str, name_table: str):
+    cursor.execute(f"SELECT {name_column} FROM {name_table}")
+    text = cursor.fetchall()
+    db.commit()
+    return text
+
 
 font_h = customtkinter.CTkFont(
     family = "Arial",
@@ -56,6 +68,15 @@ text_p3 = customtkinter.CTkLabel(
 )
 text_p3.place(x = 20, y = 350)
 
+user_name = customtkinter.CTkLabel(
+    master = app,
+    text_color = "white",
+    bg_color = "#5DA7B1",
+    text = select(name_column = "name", name_table = "User"),
+    font = font_p
+)
+text_p3.place(x = 121, y = 352)
+
 text_p4 = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
@@ -65,4 +86,5 @@ text_p4 = customtkinter.CTkLabel(
 )
 text_p4.place(x= 20, y = 450)
 
+db.close()
 app.mainloop()
