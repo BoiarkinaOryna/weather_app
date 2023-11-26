@@ -13,10 +13,13 @@ app.title("Особистий кабінет")
 db = sqlite3.connect("database.db")
 cursor = db.cursor()
 
-def select(name_column: str, name_table: str):
-    cursor.execute(f"SELECT {name_column} FROM {name_table}")
+def select(name_column: str, name_table: str, surname: str):
+    cursor.execute(f'SELECT {name_column} FROM {name_table} WHERE surname = {surname}')
+    print(cursor.fetchall())
     text = cursor.fetchall()
     db.commit()
+    print(text)
+    
     return text
 
 
@@ -72,10 +75,10 @@ user_name = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(name_column = "name", name_table = "User"),
+    text = select(name_column = "name", name_table = "Users", surname = "surname"),
     font = font_p
 )
-text_p3.place(x = 121, y = 352)
+user_name.place(x = 121, y = 352)
 
 text_p4 = customtkinter.CTkLabel(
     master = app,

@@ -13,7 +13,7 @@ app.geometry("460x645x643x62")
 app.title("Реєстрація користувача")
 
 font_h = customtkinter.CTkFont(
-    family = "Arial",
+    family = "Roboto Slab",
     weight = "bold",
     size = 28
 )
@@ -45,7 +45,7 @@ text_p2 = customtkinter.CTkLabel(
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Місто:",
-     font = ("Roboto Slab", 22)
+    font = ("Roboto Slab", 22)
 )
 text_p2.place(x = 20, y = 250)
 
