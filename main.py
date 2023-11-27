@@ -2,27 +2,37 @@ import customtkinter
 import sqlite3
 import requests
 import json
+import asyncio
+import registration as reg
 
 city = "Дніпро"
-apikey = "6f4d7565a9d7bfbe8be8550a1874dc50"
-url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}'
+apikey = "S1a7YDlnJmRJ6m44E2cr6wWVH8NfILK1"
+url = f'https://api.tomorrow.io/v4/weather/forecast?location=42.3478,-71.0466&apikey=S1a7YDlnJmRJ6m44E2cr6wWVH8NfILK1'
 
 response = requests.get(url)
+print(response)
+
+async def counting_degries(F):
+    celsius = round(F - 32 / 1.8)
+    return celsius 
+
 if response.status_code == 200:
     w_data = response.json()
     
-    temp_min = round(w_data['main']['temp_min'] - 273.15)
-    temp_max = round(w_data['main']['temp_max'] - 273.15)
-    
     connect = sqlite3.connect("database.db")
     cursor = connect.cursor()
-    # cursor.execute("ALTER TABLE Users ADD COLUMS (00:00, 01:00, 02:00, 03:00, 04:00, 05:00, 06:00, 07:00, 08:00, 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00, 22:00, 23:00)")
-    # cursor.execute(
-    #     "INSERT INTO Users (00:00, 01:00, 02:00, 03:00, 04:00, 05:00, 06:00, 07:00, 08:00, 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00, 22:00, 23:00) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    #     (temp_min, temp_min, temp_min, temp_min, temp_min, temp_min, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_max, temp_min, temp_min, temp_max, temp_min)
-    #     )
-    cursor.execute("ALTER TABLE IF NOT EXISTS Users ADD COLUMN time")
-    cursor.execute("INSERT INTO Users (time) VALUE (?)", (temp_min))
+
+    print(reg.text_surname)
+    cursor.execute(f'SELECT city FROM Users WHERE surname = {reg.text_surname}')
+    if reg.text_city == "Dnipro" or reg.text_city == "Lviv" or reg.text_city == "Kyiv" or reg.text_city == "Zaporizhzhia": 
+        cursor.execute("CREATE TABLE IF NOT EXISTS Weather (Dnipro TEXT, Lviv TEXT, Kyiv TEXT, Zaporizhzhia TEXT)")
+    else:
+        try:
+            cursor.execute(f"SELECT {reg.text_city} FROM Weather")
+        except:
+            cursor.execute(f"ALTER TABLE Weather ADD COLUMN {reg.text_city}")
+
+        cursor.execute("INSERT INTO Weather () VALUES (?)", ())
 
 app = customtkinter.CTk()
 app.config(bg = "#5DA7B1")
@@ -30,7 +40,6 @@ app.config(bg = "#5DA7B1")
 app.geometry(f"120x800x85x484")
 app.title("big screen")
 
-cursor.execute(f'SELECT 00:00 FROM Users WHERE surname = Бояркіна')
 print(cursor.fetchall())
 text1 = cursor.fetchall()
 

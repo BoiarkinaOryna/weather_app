@@ -7,7 +7,10 @@ app.config(
     bg = "#5DA7B1",
     borderwidth = 5,
     )
-
+text_country = None
+text_city = None
+text_name = None
+text_surname = None
 
 app.geometry("460x645x643x62")
 app.title("Реєстрація користувача")
@@ -38,7 +41,7 @@ text_p1 = customtkinter.CTkLabel(
     text = "Країна:",
     font = ("Roboto Slab", 22)
 )
-text_p1.place(x = 20, y = 150)
+text_p1.place(x = 46, y = 108)
 
 text_p2 = customtkinter.CTkLabel(
     master = app,
@@ -47,7 +50,7 @@ text_p2 = customtkinter.CTkLabel(
     text = "Місто:",
     font = ("Roboto Slab", 22)
 )
-text_p2.place(x = 20, y = 250)
+text_p2.place(x = 46, y = 207)
 
 text_p3 = customtkinter.CTkLabel(
     master = app,
@@ -56,7 +59,7 @@ text_p3 = customtkinter.CTkLabel(
     text = "Ім'я:",
     font = ("Roboto Slab", 22)
 )
-text_p3.place(x = 20, y = 350)
+text_p3.place(x = 46, y = 306)
 
 text_p4 = customtkinter.CTkLabel(
     master = app,
@@ -65,7 +68,7 @@ text_p4 = customtkinter.CTkLabel(
     text = "Прізвище:",
     font = ("Roboto Slab", 22)
 )
-text_p4.place(x= 20, y = 450)
+text_p4.place(x = 46, y = 405)
 
 entry1 = customtkinter.CTkEntry(
     master = app,
@@ -77,7 +80,7 @@ entry1 = customtkinter.CTkEntry(
     border_color = "white",
     corner_radius = 50,
 )
-entry1.place(x = 20, y = 200)
+entry1.place(x = 38, y = 150)
 
 entry2 = customtkinter.CTkEntry(
     master = app,
@@ -90,7 +93,7 @@ entry2 = customtkinter.CTkEntry(
     corner_radius = 50,
     
 )
-entry2.place(x = 20, y = 300)
+entry2.place(x = 38, y = 249)
 
 
 entry3 = customtkinter.CTkEntry(
@@ -104,7 +107,7 @@ entry3 = customtkinter.CTkEntry(
     corner_radius = 50
 )
 
-entry3.place(x = 20, y = 400)
+entry3.place(x = 38, y = 348)
 
 entry4 = customtkinter.CTkEntry(
     master = app,
@@ -117,7 +120,7 @@ entry4 = customtkinter.CTkEntry(
     corner_radius = 50
 )
 
-entry4.place(x = 20, y = 500)
+entry4.place(x = 38, y = 447)
     
     
 def save():
@@ -150,6 +153,6 @@ button = customtkinter.CTkButton(
     corner_radius = 50,
     command = save
 )
-button.place(x = 119, y = 596)
+button.place(x = 119, y = 546)
 
 app.mainloop()
