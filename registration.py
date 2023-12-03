@@ -70,6 +70,8 @@ text_p4 = customtkinter.CTkLabel(
 )
 text_p4.place(x = 46, y = 405)
 
+# text_entry = "your data in English"
+
 entry1 = customtkinter.CTkEntry(
     master = app,
     width = 218,
@@ -79,6 +81,7 @@ entry1 = customtkinter.CTkEntry(
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
+    # textvariable = text_entry
 )
 entry1.place(x = 38, y = 150)
 
@@ -91,7 +94,7 @@ entry2 = customtkinter.CTkEntry(
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
-    
+    # textvariable = text_entry
 )
 entry2.place(x = 38, y = 249)
 
@@ -104,7 +107,8 @@ entry3 = customtkinter.CTkEntry(
     fg_color = "#096C82",
     border_width = 3,
     border_color= "white",
-    corner_radius = 50
+    corner_radius = 50,
+    # textvariable = text_entry
 )
 
 entry3.place(x = 38, y = 348)
@@ -117,13 +121,15 @@ entry4 = customtkinter.CTkEntry(
     fg_color = "#096C82",
     border_width = 3,
     border_color = "white",
-    corner_radius = 50
+    corner_radius = 50,
+    # textvariable = text_entry
 )
 
 entry4.place(x = 38, y = 447)
     
     
 def save():
+    global text_country, text_city, text_name, text_surname
     db = sqlite3.connect("database.db")
     cursor = db.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS Users (country TEXT, city TEXT, name TEXT, surname TEXT)")
@@ -132,12 +138,10 @@ def save():
     text_city = entry2.get()
     text_name = entry3.get()
     text_surname = entry4.get()
-    print(text_country)
-    cursor.execute(f"INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
+    cursor.execute("INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
     
     db.commit()
     db.close()
-    print("1")
     app.destroy()
     
 
