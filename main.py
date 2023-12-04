@@ -53,7 +53,22 @@ search = customtkinter.CTkEntry(
 )   
 search.place(x = 918, y = 31)
 
-def create_frame(y1, color1):
+font_city = customtkinter.CTkFont(
+    family = "Roboto Slab",
+    size = 16
+)
+font_time_degrees = customtkinter.CTkFont(
+    family = "Roboto Slab",
+    size = 12
+
+)
+font_username = customtkinter.CTkFont(
+    family = "Roboto Slab",
+    size = 14
+)
+
+
+def create_frame(y1, color1, city1, time1, description1, min_max1):
     mini_frame = customtkinter.CTkFrame(
         master = app,
         width = 236,
@@ -63,14 +78,53 @@ def create_frame(y1, color1):
         bg_color = "#096C82",
         fg_color = color1,
         border_color = "white",
-        # text = city1,
-        # text2 = time1
     )
     mini_frame.place(x = 19, y = y1)
 
+    text_color = None
+    plus_x = 0
+    plus_y = 0
+    text = None
+    min_max_temp = min_max1
+    for count in range(3):
+        if count == 1:
+            text_color = "white"
+            plus_y = 33
+            plus_x = 14
+            text = time1
+        elif count == 2:
+            text_color = "#b3d0d6"
+            plus_y = 70
+            plus_x = 14
+            text = description1
+        elif count == 3:
+            text_color = "#b3d0d6"
+            plus_y = 70
+            plus_x = 122
+            text = min_max_temp
+        data = customtkinter.CTkLabel(
+            master = app,
+            text_color = text_color,
+            bg_color = color1,
+            text = text,
+            font = font_time_degrees,
+        )
+        print(y1 + plus_y)
+        data.place(x = 27 + plus_x, y = y1 + plus_y)
+
+    city = customtkinter.CTkLabel(
+        master = app,
+        text_color = "white",
+        text = city1,
+        font = font_city,
+        bg_color = color1
+    )
+    city.place(x = 27, y = y1 + 8)
 beg_y = 31
 city = None
 time = 0
+description = "A"
+min_max = "0"
 for count in range(6):
     cur_y = beg_y + 133 * count
     if count == 0:
@@ -80,23 +134,34 @@ for count in range(6):
     if cur_y == 31:
         city = "Поточна позиція"
         time = cur_city
+        min_max = "1"
+        description = "B"
     elif cur_y == 164:
         city = "Київ"
-        # time =
+        time = "00"
+        min_max = "2"
+        description = "C"
     elif cur_y == 297:
         city = "Рим"
-        # time =
+        time = "00"
+        min_max = "3"
+        description = "D"
     elif cur_y == 430:
         city = "Лондон"
-        # time =
+        time = "00"
+        min_max = "4"
     elif cur_y == 563:
         city = "Варшава"
-        # time =
+        time = "00"
+        min_max ="5"
+        description = "E"
     elif cur_y == 696:
         city = "Прага"
-        # time =
-    create_frame(y1 = cur_y, color1 = color)
-
+        time = "00"
+        min_max = 6
+        description = "F"
+    create_frame(y1 = cur_y, color1 = color, city1 = city, time1 = time, description1 = description, min_max1 = min_max)
+ 
 # print(cursor.fetchall())
 # text1 = cursor.fetchall()
 font_c = customtkinter.CTkFont(
@@ -109,7 +174,6 @@ text2 = customtkinter.CTkLabel(
     bg_color = "#5DA7B1",
     text = "Поточна позиція",
     font = font_c,
-
 )
 text2.place(x = 576, y = 101)
 

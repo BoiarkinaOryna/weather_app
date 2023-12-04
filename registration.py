@@ -81,7 +81,7 @@ entry1 = customtkinter.CTkEntry(
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
-    # textvariable = text_entry
+    placeholder_text = "enter your data in English"
 )
 entry1.place(x = 38, y = 150)
 
@@ -94,7 +94,7 @@ entry2 = customtkinter.CTkEntry(
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
-    # textvariable = text_entry
+    placeholder_text = "enter your data in English"
 )
 entry2.place(x = 38, y = 249)
 
@@ -108,7 +108,7 @@ entry3 = customtkinter.CTkEntry(
     border_width = 3,
     border_color= "white",
     corner_radius = 50,
-    # textvariable = text_entry
+    placeholder_text = "enter your data in English"
 )
 
 entry3.place(x = 38, y = 348)
@@ -122,7 +122,7 @@ entry4 = customtkinter.CTkEntry(
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
-    # textvariable = text_entry
+    placeholder_text = "enter your data in English"
 )
 
 entry4.place(x = 38, y = 447)
