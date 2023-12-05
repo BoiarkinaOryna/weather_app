@@ -1,8 +1,10 @@
 import customtkinter
 import sqlite3
 import registration as reg
+import path_to_file as path
 
 app = customtkinter.CTk()
+app.resizable(height= False, width= False)
 app.config(bg = "#5DA7B1")
 
 app.geometry("460x645x573x643")
@@ -13,11 +15,11 @@ print(reg.text_surname)
 db = sqlite3.connect("database.db")
 cursor = db.cursor()
 
-def select(surname: str):
+def select(surname: str, name: str):
     cursor.execute('SELECT * FROM Users WHERE surname = ?', [surname])
+    cursor.execute('SELECT * FROM Users WHERE name = ?', [name])
     return cursor.fetchall()
-
-
+    
 font_h = customtkinter.CTkFont(
     family = "Roboto Slab",
     size = 30
@@ -59,7 +61,7 @@ user_country = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname)[0][0],
+    text = select(surname = reg.text_surname, name = reg.text_name)[0][0],
     font = font_info
 )
 user_country.place(x = 119, y = 157)
@@ -77,7 +79,7 @@ user_city = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname)[0][1],
+    text = select(surname = reg.text_surname, name = reg.text_name)[0][1],
     font = font_info
 )
 user_city.place(x = 121, y = 256)
@@ -95,7 +97,7 @@ user_name = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname)[0][2],
+    text = select(surname = reg.text_surname, name = reg.text_name)[0][2],
     font = font_info
 )
 user_name.place(x = 121, y = 352)
@@ -113,7 +115,7 @@ user_surname = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname)[0][3],
+    text = select(surname = reg.text_surname, name = reg.text_name)[0][3],
     font = font_info
     
 )

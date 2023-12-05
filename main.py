@@ -3,7 +3,9 @@ import customtkinter
 import requests
 # import json
 import asyncio
+from PIL import Image
 import office as of
+import path_to_file as path
 
 cur_city = of.user_city._text.lower()
 print(cur_city)
@@ -25,6 +27,7 @@ else:
     print("Sorry. I don`t know this city.")
 
 app = customtkinter.CTk()
+app.resizable(height = False, width = False)
 app.config(bg = "#5DA7B1")
 
 app.geometry(f"1200x800x85x484")
@@ -62,11 +65,6 @@ font_time_degrees = customtkinter.CTkFont(
     size = 12
 
 )
-font_username = customtkinter.CTkFont(
-    family = "Roboto Slab",
-    size = 14
-)
-
 
 def create_frame(y1, color1, city1, time1, description1, min_max1):
     mini_frame = customtkinter.CTkFrame(
@@ -86,18 +84,22 @@ def create_frame(y1, color1, city1, time1, description1, min_max1):
     plus_y = 0
     text = None
     min_max_temp = min_max1
-    for count in range(3):
+    for count in range(4):
+        # print(count)
         if count == 1:
+            # print("time")
             text_color = "white"
             plus_y = 33
             plus_x = 14
             text = time1
         elif count == 2:
+            # print("description")
             text_color = "#b3d0d6"
             plus_y = 70
             plus_x = 14
             text = description1
         elif count == 3:
+            # print("temperature")
             text_color = "#b3d0d6"
             plus_y = 70
             plus_x = 122
@@ -161,19 +163,44 @@ for count in range(6):
         min_max = 6
         description = "F"
     create_frame(y1 = cur_y, color1 = color, city1 = city, time1 = time, description1 = description, min_max1 = min_max)
- 
-# print(cursor.fetchall())
-# text1 = cursor.fetchall()
+
+user_img = customtkinter.CTkImage(
+    light_image = Image.open(path.path_to_file() + "\\user_img.png"),
+    size = (48.48, 50) 
+)
+
+font_username = customtkinter.CTkFont(
+    family = "Roboto Slab",
+    size = 14
+)
+
+user_img_label = customtkinter.CTkLabel(
+    master= app,
+    text = "",
+    image = user_img,
+    bg_color = "#5DA7B1"
+)
+
+user_img_label.place(x = 318, y = 29)
+
+user_label = customtkinter.CTkLabel(
+    master= app,
+    font = font_username,
+    bg_color = "#5DA7B1",
+    text = f"{of.user_name._text} {of.user_surname._text}"
+)
+user_label.place(x = 380, y = 39)
 font_c = customtkinter.CTkFont(
     family = "Roboto Slab",
     size = 35
 )
+
 text2 = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Поточна позиція",
-    font = font_c,
+    font = font_c
 )
 text2.place(x = 576, y = 101)
 
