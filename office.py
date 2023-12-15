@@ -1,7 +1,7 @@
 import customtkinter
 import sqlite3
 import registration as reg
-import path_to_file as path
+import modules.path_to_file as path
 
 app = customtkinter.CTk()
 app.resizable(height= False, width= False)
