@@ -1,16 +1,18 @@
 from PIL import Image
 import modules.path_to_file as m_path
 import customtkinter 
-
+import sqlite3 
 # def set_day_night(list_json, data_time):
 #     list_json
 #     timestamp = (date_time -"0001-01-01T00:00:00Z) * 86400
+db = sqlite3.connect("database.db")
+cursor = db.cursor()
 
 def find_images(app1, description, width, height, time = "day"):
     if time == "day":
     
         if description == "легкий дощ":
-            image = "drizzle_412695.png"
+            image = "drizzle_2412695.png"
         elif description == "сніг" or description == "легкий сніг":
             image = "snowy_2412768.png"
         elif description == "дощ":
@@ -50,3 +52,12 @@ def find_images(app1, description, width, height, time = "day"):
         image = image_weather
     )
     return image_weather_lable
+
+
+def select(surname: str, name: str):
+    print("func: select, SURNAME =", surname)
+    print("func: select, NAME =", name)
+    cursor.execute('SELECT * FROM Users WHERE surname = ?', [surname])
+    cursor.execute('SELECT * FROM Users WHERE name = ?', [name])
+    db.commit()
+    return cursor.fetchall()

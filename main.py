@@ -3,22 +3,31 @@ import customtkinter
 import requests
 # import json
 # import asyncio
+import office
 from PIL import Image
-import office as of
+from registration import text_surname, text_name
 import modules.path_to_file as path
 from datetime import datetime
 import modules.functions as m_func
 
+'''
+    searching time and data
+'''
+
+print("main, 17: text_name =", text_name)
+print("main, 18: text_surname =", text_surname)
 full_time = str(datetime.now())
 print("full_time = ", type(full_time))
 time = full_time.split(".")
 print("time =", time[0])
 hours = time[0].split(" ")
 print("hours =", hours[1])
+print("main, 23: text_city =", m_func.select(surname = text_surname, name = text_name)[0][1])
+cur_city = m_func.select(surname = text_surname, name = text_name)[0][1]
 
-hour = hours[1].split(":")
-cur_city = of.user_city._text
-print(cur_city)
+'''
+    api creation
+'''
 
 apikey = "6f4d7565a9d7bfbe8be8550a1874dc50"
 url = f'https://api.openweathermap.org/data/2.5/forecast?q={cur_city}&appid={apikey}&lang=ua'
@@ -83,6 +92,9 @@ if response5.status_code == 200:
 else:
     print("Sorry. I don`t know this city. 5")
 
+'''
+    creating the app
+'''
 
 app = customtkinter.CTk()
 app.resizable(height = False, width = False)
@@ -152,6 +164,10 @@ font50 = customtkinter.CTkFont(
     size = 50,
 )
 
+'''
+    Creating frames with information about another cities
+'''
+
 def create_frame(y1, color1, city1, time1, description1, min_max1, temp1):
     mini_frame = customtkinter.CTkFrame(
         master = app,
@@ -220,6 +236,10 @@ def create_frame(y1, color1, city1, time1, description1, min_max1, temp1):
     )
     city.place(x = 23, y = y1 + 8)
 
+'''
+    Searching information from another cities
+'''
+
 json_list = w_data['list'][0]
 print("json_list =", json_list)
 json_main = json_list["main"]
@@ -261,6 +281,37 @@ json_main5 = json_list5["main"]
 print("json_main5 =",json_main5)
 json_weather5 = json_list5["weather"][0]
 print("json_weather5 =",json_weather5)
+
+'''
+    Searching today`s information
+'''
+
+main_data = json_list["main"]
+# round the number of the temperature and change it into Celsium degree
+temperature = round(main_data["temp"])
+# get the data we need
+timestamp = json_list["dt"]
+
+# The time
+timezone = datetime.utcfromtimestamp(json_list["dt"])
+hour = datetime.now().hour
+minute = datetime.now().minute
+
+# The sunrise
+
+date_only = datetime.utcfromtimestamp(json_list["dt"]).strftime("%d.%m.%y")
+
+sunrise_time = datetime.utcfromtimestamp(w_data['city']['sunrise'] + w_data["city"]["timezone"])
+hour_s, minute_s = sunrise_time.hour, sunrise_time.minute
+
+# The data
+
+# print information
+print("timezone =", timezone)
+print(f"temperature = {temperature}°C")
+print(f"The date in the {cur_city} = {date_only}")
+print(f"Sun rises in {cur_city} at {hour_s}:{minute_s} local time")
+
 beg_y = 31
 city = None
 time = 0
@@ -281,7 +332,7 @@ for count in range(6):
     elif cur_y == 164:
         temperature = counting_degries(json_main1['temp'])
         city = "Київ"
-        time = hour[0] + ":" + hour[1]
+        time = str(hour) + ":" + str(minute)
         min_max = f"макс.: {counting_degries(json_main1['temp_max'])}, мін.: {counting_degries(json_main1['temp_min'])}"
         description = json_weather1["description"]
     elif cur_y == 297:
@@ -333,7 +384,7 @@ user_label = customtkinter.CTkLabel(
     master= app,
     font = font_username,
     bg_color = "#5DA7B1",
-    text = f"{of.user_name._text} {of.user_surname._text}"
+    text = f"{text_name} {text_surname}"
 )
 user_label.place(x = 380, y = 39)
 font_c = customtkinter.CTkFont(
@@ -354,4 +405,44 @@ weathger_image = m_func.find_images(app1 = app, description = json_list["weather
 
 weathger_image.place(x = 380, y = 171)
 
+def create_label(text1, x1, y1, size1):
+    text_label = customtkinter.CTkLabel(
+        master = app,
+        text_color = "white",
+        bg_color = "#5DA7B1",
+        text = text1,
+        font = ("Roboto Slab", size1)
+    )
+    text_label.place(x = x1, y = y1)
+    
+create_label(text1 = cur_city, x1 = 689, y1 = 162, size1 = 22)
+create_label(text1 = counting_degries(json_main['temp']), x1 = 683, y1 = 203, size1 = 80)
+create_label(text1 = json_weather["description"], x1 = 663, y1 = 284, size1 = 30)
+create_label(text1 = counting_degries(json_main['temp_min']), x1 = 689.84, y1 = 348, size1 = 30)
+create_label(text1 = counting_degries(json_main['temp_max']), x1 = 754.44, y1 = 348, size1 = 30)
+
+weekday = timezone.strftime("%a")
+print("weekday =", weekday)
+
+if weekday == "Mon":
+    weekday = "Понеділок"
+elif weekday == "Tue":
+    weekday = "Вівторок"
+elif weekday == "Wed":
+    weekday = "Середа"
+elif weekday == "Thu":
+    weekday = "Четвер"
+elif weekday == "Fri":
+    weekday = "П'ятниця"
+elif weekday == "Sat":
+    weekday = "Субота"
+elif weekday == "Sun":
+    weekday = "Неділя"
+create_label(text1 = weekday, x1 = 956, y1 = 191, size1 = 18)
+
+create_label(text1 = date_only, x1 = 936, y1 = 227, size1 = 40)
+create_label(text1 = f"{hour}:{minute}", x1 = 974, y1 = 274, size1 = 30)
+
+print("func db closed")
+m_func.db.close()
 app.mainloop()

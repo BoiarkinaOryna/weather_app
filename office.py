@@ -1,7 +1,9 @@
 import customtkinter
-import sqlite3
-import registration as reg
 import modules.path_to_file as path
+from PIL import Image
+import subprocess
+import modules.functions as func
+from registration import text_name, text_surname
 
 app = customtkinter.CTk()
 app.resizable(height= False, width= False)
@@ -10,15 +12,7 @@ app.config(bg = "#5DA7B1")
 app.geometry("460x645x573x643")
 app.title("Особистий кабінет")
 
-print(reg.text_surname)
-
-db = sqlite3.connect("database.db")
-cursor = db.cursor()
-
-def select(surname: str, name: str):
-    cursor.execute('SELECT * FROM Users WHERE surname = ?', [surname])
-    cursor.execute('SELECT * FROM Users WHERE name = ?', [name])
-    return cursor.fetchall()
+print(text_surname)
     
 font_h = customtkinter.CTkFont(
     family = "Roboto Slab",
@@ -32,7 +26,7 @@ text_h = customtkinter.CTkLabel(
     text = "Особистий кабінет",
     font = font_h
 )
-text_h.place(x = 230, y = 50, anchor = customtkinter.CENTER)
+text_h.place(x = 38, y = 42)
 
 font_p = customtkinter.CTkFont(
     family = "Roboto Slab",
@@ -61,7 +55,7 @@ user_country = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname, name = reg.text_name)[0][0],
+    text = func.select(surname = text_surname, name = text_name)[0][0],
     font = font_info
 )
 user_country.place(x = 119, y = 157)
@@ -79,7 +73,7 @@ user_city = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname, name = reg.text_name)[0][1],
+    text = func.select(surname = text_surname, name = text_name)[0][1],
     font = font_info
 )
 user_city.place(x = 121, y = 256)
@@ -97,7 +91,7 @@ user_name = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname, name = reg.text_name)[0][2],
+    text = func.select(surname = text_surname, name = text_name)[0][2],
     font = font_info
 )
 user_name.place(x = 121, y = 352)
@@ -115,12 +109,15 @@ user_surname = customtkinter.CTkLabel(
     master = app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = select(surname = reg.text_surname, name = reg.text_name)[0][3],
+    text = func.select(surname = text_surname, name = text_name)[0][3],
     font = font_info
     
 )
 user_surname.place(x = 119, y = 455)
 
+def button_clicked():
+    app.destroy()
+      
 button = customtkinter.CTkButton(
     master = app,
     width = 218,
@@ -131,10 +128,43 @@ button = customtkinter.CTkButton(
     fg_color = "#096C82",
     text = "Перейти до додатку",
     corner_radius = 50,
-    command = app.destroy
+    command = button_clicked
 )
 button.place(x = 119, y = 546)
 
-db.commit()
-db.close()
+btn_img = customtkinter.CTkImage(
+    light_image = Image.open(path.path_to_file() + "\\exit.png"),
+    size = (28, 29)
+)
+
+def exit():
+    print("Button  clicked!")
+    # reg = open("registration.py", mode = "w")
+    # run_reg = exec(open("registration.py").read)
+    app.destroy()
+    subprocess.run(["python", "registration.py"])
+
+label = customtkinter.CTkLabel(
+    master = app,
+    text = "Вихід",
+    font = ("Roboto Slab", 12),
+    text_color = "white",
+    bg_color = "#5DA7B1"
+)
+label.place(x = 370, y = 26)
+
+img_button = customtkinter.CTkButton(
+    master = app,
+    text = "",
+    bg_color = "#5DA7B1",
+    fg_color = "#5DA7B1",
+    hover_color= "#5DA7B1",
+    command = exit,
+    width = 40,
+    height = 40,
+    image = btn_img
+)
+
+img_button.place(x = 409 , y = 20)
+
 app.mainloop()

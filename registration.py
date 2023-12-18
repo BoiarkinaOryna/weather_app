@@ -1,6 +1,6 @@
 import customtkinter
-import sys
 import sqlite3
+
 app = customtkinter.CTk()
 app.resizable(width= False, height= False)
 app.config(
@@ -126,24 +126,29 @@ entry4 = customtkinter.CTkEntry(
 )
 
 entry4.place(x = 38, y = 447)
-    
-    
+
+
 def save():
     global text_country, text_city, text_name, text_surname
     db = sqlite3.connect("database.db")
+    print("contction to db")
     cursor = db.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS Users (country TEXT, city TEXT, name TEXT, surname TEXT)")
     
     text_country = entry1.get()
     text_city = entry2.get()
     text_name = entry3.get()
-    text_surname = entry4.get()
-    cursor.execute("INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
+    text_surname = entry4.get()    
     
+    print("reg, 143: text_city =", text_city)
+    print("reg, 144: text_name =", text_name)
+    print("reg, 144: text_surname =", text_surname)
+    cursor.execute("INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
+    print("close db")
     db.commit()
     db.close()
+    print("reg, 147: text_city =", text_city)
     app.destroy()
-    
 
 button = customtkinter.CTkButton(
     master = app,
