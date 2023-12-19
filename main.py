@@ -1,8 +1,5 @@
 import customtkinter
-# import sqlite3
 import requests
-# import json
-# import asyncio
 import office
 from PIL import Image
 from registration import text_surname, text_name
@@ -302,7 +299,11 @@ minute = datetime.now().minute
 date_only = datetime.utcfromtimestamp(json_list["dt"]).strftime("%d.%m.%y")
 
 sunrise_time = datetime.utcfromtimestamp(w_data['city']['sunrise'] + w_data["city"]["timezone"])
-hour_s, minute_s = sunrise_time.hour, sunrise_time.minute
+hour_sunrise, minute_sunrise = sunrise_time.hour, sunrise_time.minute
+#
+sunset_time = datetime.utcfromtimestamp(w_data['city']['sunset'] + w_data["city"]["timezone"])
+hour_sunset, minute_sunset = sunset_time.hour, sunset_time.minute
+
 
 # The data
 
@@ -310,7 +311,7 @@ hour_s, minute_s = sunrise_time.hour, sunrise_time.minute
 print("timezone =", timezone)
 print(f"temperature = {temperature}°C")
 print(f"The date in the {cur_city} = {date_only}")
-print(f"Sun rises in {cur_city} at {hour_s}:{minute_s} local time")
+# print(f"Sun rises in {cur_city} at {hour_s}:{minute_s} local time")
 
 beg_y = 31
 city = None
@@ -442,6 +443,54 @@ create_label(text1 = weekday, x1 = 956, y1 = 191, size1 = 18)
 
 create_label(text1 = date_only, x1 = 936, y1 = 227, size1 = 40)
 create_label(text1 = f"{hour}:{minute}", x1 = 974, y1 = 274, size1 = 30)
+
+main_frame = customtkinter.CTkFrame(
+    master = app,
+    width = 818,
+    height = 240,
+    corner_radius = 20,
+    border_width = 5,
+    bg_color = "#5DA7B1",
+    fg_color = "#5DA7B1",
+    border_color = "white"
+)
+main_frame.place(x = 325, y = 430)
+
+line = customtkinter.CTkFrame(
+   master = app,
+   width = 817,
+   height = 1,
+   border_width = 2,
+#    fg_color = "white",
+#    bg_color = "white",
+   border_color = "#FFFFFF"
+)
+line.place(x = 344, y = 476 + 430)
+
+def find_hours(n):
+    if hour + n <= 23:
+        time = hour + n 
+    else:
+        time = hour
+        for count in range(n):
+            if time + n >= 24:
+                time = -1
+            elif time + n <= 23:
+                time += 1
+    return time
+
+create_label(text1 = f"Захід сонця о {hour_sunset}:{minute_sunset}. Очікується {description} приблизно о {hour + 6}:00", x1 = 346, y1 = 445, size1 = 14)
+create_label(text1 = "Зараз", x1 = 325 + 19, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 1)}:00", x1 = 325 + 116, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 2)}:00", x1 = 325 + 208, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 3)}:00", x1 = 325 + 300, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 4)}:00", x1 = 325 + 392, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 5)}:00", x1 = 325 + 484, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 6)}:00", x1 = 325 + 576, y1 = 430 + 54, size1 = 18)
+create_label(text1 = f"{find_hours(n = 7)}:00", x1 = 325 + 668, y1 = 54 + 430, size1 = 18)
+create_label(text1 = f"{find_hours(n = 8)}:00", x1 = 325 + 760, y1 = 54 + 430, size1 = 18)
+
+create_label(text1 = f"{temperature}°C", x1 = 325 + 26, y1 = 325 + 173, size1 = 41.02)
 
 print("func db closed")
 m_func.db.close()

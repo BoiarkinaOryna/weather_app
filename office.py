@@ -116,6 +116,7 @@ user_surname = customtkinter.CTkLabel(
 user_surname.place(x = 119, y = 455)
 
 def button_clicked():
+    # subprocess.run(["python", "main.py"])
     app.destroy()
       
 button = customtkinter.CTkButton(

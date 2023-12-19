@@ -1,5 +1,6 @@
 import customtkinter
 import sqlite3
+import subprocess
 
 app = customtkinter.CTk()
 app.resizable(width= False, height= False)
@@ -149,6 +150,7 @@ def save():
     db.close()
     print("reg, 147: text_city =", text_city)
     app.destroy()
+    # subprocess.run(['python', 'office.py'])
 
 button = customtkinter.CTkButton(
     master = app,
