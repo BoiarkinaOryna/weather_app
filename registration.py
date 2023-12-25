@@ -78,7 +78,7 @@ entry1 = customtkinter.CTkEntry(
     width = 218,
     height = 46,
     bg_color = "#5DA7B1",
-    fg_color = "#096C82",
+    fg_color = "#1f333c",
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
@@ -91,7 +91,7 @@ entry2 = customtkinter.CTkEntry(
     width = 218,
     height = 46,
     bg_color = "#5DA7B1",
-    fg_color = "#096C82",
+    fg_color = "#1f333c",
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
@@ -105,7 +105,7 @@ entry3 = customtkinter.CTkEntry(
     width = 295,
     height = 46,
     bg_color = "#5DA7B1",
-    fg_color = "#096C82",
+    fg_color = "#1f333c",
     border_width = 3,
     border_color= "white",
     corner_radius = 50,
@@ -119,7 +119,7 @@ entry4 = customtkinter.CTkEntry(
     width = 295,
     height = 46,
     bg_color = "#5DA7B1",
-    fg_color = "#096C82",
+    fg_color = "#1f333c",
     border_width = 3,
     border_color = "white",
     corner_radius = 50,
@@ -132,7 +132,7 @@ entry4.place(x = 38, y = 447)
 def save():
     global text_country, text_city, text_name, text_surname
     db = sqlite3.connect("database.db")
-    print("contction to db")
+    # print("contction to db")
     cursor = db.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS Users (country TEXT, city TEXT, name TEXT, surname TEXT)")
     
@@ -145,10 +145,10 @@ def save():
     print("reg, 144: text_name =", text_name)
     print("reg, 144: text_surname =", text_surname)
     cursor.execute("INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
-    print("close db")
+    # print("close db")
     db.commit()
     db.close()
-    print("reg, 147: text_city =", text_city)
+    # print("reg, 147: text_city =", text_city)
     app.destroy()
     # subprocess.run(['python', 'office.py'])
 
@@ -159,7 +159,7 @@ button = customtkinter.CTkButton(
     border_width = 3, 
     border_color = "white",
     bg_color = "#5DA7B1",
-    fg_color = "#096C82",
+    fg_color = "#1f333c",
     text = "Зберегти",
     corner_radius = 50,
     command = save

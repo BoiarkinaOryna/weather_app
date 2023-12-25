@@ -12,7 +12,7 @@ app.config(bg = "#5DA7B1")
 app.geometry("460x645x573x643")
 app.title("Особистий кабінет")
 
-print(text_surname)
+# print(text_surname)
     
 font_h = customtkinter.CTkFont(
     family = "Roboto Slab",
@@ -126,7 +126,7 @@ button = customtkinter.CTkButton(
     border_width = 3, 
     border_color = "white",
     bg_color = "#5DA7B1",
-    fg_color = "#096C82",
+    fg_color = "#1f333c",
     text = "Перейти до додатку",
     corner_radius = 50,
     command = button_clicked
@@ -139,7 +139,7 @@ btn_img = customtkinter.CTkImage(
 )
 
 def exit():
-    print("Button  clicked!")
+    # print("Button  clicked!")
     # reg = open("registration.py", mode = "w")
     # run_reg = exec(open("registration.py").read)
     app.destroy()
