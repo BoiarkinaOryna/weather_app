@@ -3,14 +3,14 @@ import modules.path_to_file as path
 from PIL import Image
 import subprocess
 import modules.functions as func
-from registration import text_name, text_surname
+import registration as reg
 
-app = customtkinter.CTk()
-app.resizable(height= False, width= False)
-app.config(bg = "#5DA7B1")
+off_app = customtkinter.CTk()
+off_app.resizable(height= False, width= False)
+off_app.config(bg = "#5DA7B1")
 
-app.geometry("460x645x573x643")
-app.title("Особистий кабінет")
+off_app.geometry("460x645x573x643")
+off_app.title("Особистий кабінет")
 
 # print(text_surname)
     
@@ -20,7 +20,7 @@ font_h = customtkinter.CTkFont(
 )
 
 text_h = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Особистий кабінет",
@@ -41,7 +41,7 @@ font_info = customtkinter.CTkFont(
 )
 
 text_p1 = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     padx = 5,
     pady = 2,
     text_color = "white",
@@ -52,16 +52,16 @@ text_p1 = customtkinter.CTkLabel(
 text_p1.place(x = 46, y = 108)
 
 user_country = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = text_surname, name = text_name)[0][0],
+    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][0],
     font = font_info
 )
 user_country.place(x = 119, y = 157)
 
 text_p2 = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Місто:",
@@ -70,16 +70,16 @@ text_p2 = customtkinter.CTkLabel(
 text_p2.place(x = 46, y = 207)
 
 user_city = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = text_surname, name = text_name)[0][1],
+    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][1],
     font = font_info
 )
 user_city.place(x = 121, y = 256)
 
 text_p3 = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Ім'я:",
@@ -88,16 +88,16 @@ text_p3 = customtkinter.CTkLabel(
 text_p3.place(x = 46, y = 306)
 
 user_name = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = text_surname, name = text_name)[0][2],
+    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][2],
     font = font_info
 )
 user_name.place(x = 121, y = 352)
 
 text_p4 = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Прізвище:",
@@ -106,10 +106,10 @@ text_p4 = customtkinter.CTkLabel(
 text_p4.place(x = 46, y = 405)
 
 user_surname = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = text_surname, name = text_name)[0][3],
+    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][3],
     font = font_info
     
 )
@@ -117,10 +117,10 @@ user_surname.place(x = 119, y = 455)
 
 def button_clicked():
     # subprocess.run(["python", "main.py"])
-    app.destroy()
+    off_app.destroy()
       
 button = customtkinter.CTkButton(
-    master = app,
+    master = off_app,
     width = 218,
     height = 46,
     border_width = 3, 
@@ -142,11 +142,14 @@ def exit():
     # print("Button  clicked!")
     # reg = open("registration.py", mode = "w")
     # run_reg = exec(open("registration.py").read)
-    app.destroy()
-    subprocess.run(["python", "registration.py"])
+    off_app.destroy()
+    reg.text_name = None
+    reg.text_surname = None
+    # subprocess.run(["python", "registration.py"])
+    subprocess.run(["python", "office.py"])
 
 label = customtkinter.CTkLabel(
-    master = app,
+    master = off_app,
     text = "Вихід",
     font = ("Roboto Slab", 12),
     text_color = "white",
@@ -155,7 +158,7 @@ label = customtkinter.CTkLabel(
 label.place(x = 370, y = 26)
 
 img_button = customtkinter.CTkButton(
-    master = app,
+    master = off_app,
     text = "",
     bg_color = "#5DA7B1",
     fg_color = "#5DA7B1",
@@ -168,4 +171,4 @@ img_button = customtkinter.CTkButton(
 
 img_button.place(x = 409 , y = 20)
 
-app.mainloop()
+off_app.mainloop()

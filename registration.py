@@ -2,9 +2,9 @@ import customtkinter
 import sqlite3
 import subprocess
 
-app = customtkinter.CTk()
-app.resizable(width= False, height= False)
-app.config(
+reg_app = customtkinter.CTk()
+reg_app.resizable(width= False, height= False)
+reg_app.config(
     bg = "#5DA7B1",
     borderwidth = 5,
     )
@@ -13,8 +13,8 @@ text_city = None
 text_name = None
 text_surname = None
 
-app.geometry("460x645x643x62")
-app.title("Реєстрація користувача")
+reg_app.geometry("460x645x643x62")
+reg_app.title("Реєстрація користувача")
 
 font_h = customtkinter.CTkFont(
     family = "Roboto Slab",
@@ -23,7 +23,7 @@ font_h = customtkinter.CTkFont(
 )
 
 text_h = customtkinter.CTkLabel(
-    master = app,
+    master = reg_app,
     width = 87,
     height = 31,
     text_color = "white",
@@ -34,7 +34,7 @@ text_h = customtkinter.CTkLabel(
 text_h.place(x = 38, y = 42)
 
 text_p1 = customtkinter.CTkLabel(
-    master = app,
+    master = reg_app,
     # padx = 5,
     # pady = 2,
     text_color = "white",
@@ -45,7 +45,7 @@ text_p1 = customtkinter.CTkLabel(
 text_p1.place(x = 46, y = 108)
 
 text_p2 = customtkinter.CTkLabel(
-    master = app,
+    master = reg_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Місто:",
@@ -54,7 +54,7 @@ text_p2 = customtkinter.CTkLabel(
 text_p2.place(x = 46, y = 207)
 
 text_p3 = customtkinter.CTkLabel(
-    master = app,
+    master = reg_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Ім'я:",
@@ -63,7 +63,7 @@ text_p3 = customtkinter.CTkLabel(
 text_p3.place(x = 46, y = 306)
 
 text_p4 = customtkinter.CTkLabel(
-    master = app,
+    master = reg_app,
     text_color = "white",
     bg_color = "#5DA7B1",
     text = "Прізвище:",
@@ -74,7 +74,7 @@ text_p4.place(x = 46, y = 405)
 # text_entry = "your data in English"
 
 entry1 = customtkinter.CTkEntry(
-    master = app,
+    master = reg_app,
     width = 218,
     height = 46,
     bg_color = "#5DA7B1",
@@ -87,7 +87,7 @@ entry1 = customtkinter.CTkEntry(
 entry1.place(x = 38, y = 150)
 
 entry2 = customtkinter.CTkEntry(
-    master = app,
+    master = reg_app,
     width = 218,
     height = 46,
     bg_color = "#5DA7B1",
@@ -101,7 +101,7 @@ entry2.place(x = 38, y = 249)
 
 
 entry3 = customtkinter.CTkEntry(
-    master = app,
+    master = reg_app,
     width = 295,
     height = 46,
     bg_color = "#5DA7B1",
@@ -115,7 +115,7 @@ entry3 = customtkinter.CTkEntry(
 entry3.place(x = 38, y = 348)
 
 entry4 = customtkinter.CTkEntry(
-    master = app,
+    master = reg_app,
     width = 295,
     height = 46,
     bg_color = "#5DA7B1",
@@ -141,19 +141,19 @@ def save():
     text_name = entry3.get()
     text_surname = entry4.get()    
     
-    print("reg, 143: text_city =", text_city)
-    print("reg, 144: text_name =", text_name)
-    print("reg, 144: text_surname =", text_surname)
+    # print("reg, 143: text_city =", text_city)
+    # print("reg, 144: text_name =", text_name)
+    # print("reg, 144: text_surname =", text_surname)
     cursor.execute("INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
     # print("close db")
     db.commit()
     db.close()
     # print("reg, 147: text_city =", text_city)
-    app.destroy()
+    reg_app.destroy()
     # subprocess.run(['python', 'office.py'])
 
 button = customtkinter.CTkButton(
-    master = app,
+    master = reg_app,
     width = 218,
     height = 46,
     border_width = 3, 
@@ -166,4 +166,4 @@ button = customtkinter.CTkButton(
 )
 button.place(x = 119, y = 546)
 
-app.mainloop()
+reg_app.mainloop()

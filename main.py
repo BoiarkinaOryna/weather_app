@@ -2,7 +2,7 @@ import customtkinter
 import requests
 import office
 from PIL import Image
-from registration import text_surname, text_name
+import registration as reg
 import modules.path_to_file as path
 from datetime import datetime
 import modules.functions as m_func
@@ -12,20 +12,20 @@ import subprocess
     searching time and data
 '''
 
-print("main, 17: text_name =", text_name)
-print("main, 18: text_surname =", text_surname)
+# print("main, 17: text_name =", text_name)
+# print("main, 18: text_surname =", text_surname)
 full_time = str(datetime.now())
 # full_time =datetime.utcfromtimestamp(json_list["dt"])
-print("full_time = ", type(full_time))
+# print("full_time = ", type(full_time))
 time = full_time.split(".")
-print("time =", time[0])
+# print("time =", time[0])
 date = time[0].split(" ")[0]
-print("date =", date)
+# print("date =", date)
 list_date = date.split("-")
 hours = time[0].split(" ")[1]
-print("hours =", hours)
-print("main, 26: text_city =", m_func.select(surname = text_surname, name = text_name)[0][1])
-cur_city = m_func.select(surname = text_surname, name = text_name)[0][1]
+# print("hours =", hours)
+# print("main, 26: text_city =", m_func.select(surname = text_surname, name = text_name)[0][1])
+cur_city = m_func.select(surname = reg.text_surname, name = reg.text_name)[0][1]
 
 '''
     api creation
@@ -54,7 +54,7 @@ def counting_degries(F):
 def count_hours(difference, round = False):
     time1 = hours.split(":")
     h = int(time1[0]) + difference
-    print("TIME IN COUNT HOURS", time1[0])
+    # print("TIME IN COUNT HOURS", time1[0])
     if round == True:
         if int(time1[1]) <= 30:
             time1[1] = "00"
@@ -64,43 +64,43 @@ def count_hours(difference, round = False):
     time1 = str(h) + ":" + time1[1]
     return time1
 
-print(response.status_code)
+# print(response.status_code)
 
 if response.status_code == 200:
     w_data = response.json()
     # print(w_data)
-else:
-    print("Sorry. I don`t know this city.")
+# else:
+    # print("Sorry. I don`t know this city.")
 
 if response1.status_code == 200:
     w_data1 = response1.json()
     # print(w_data)
-else:
-    print("Sorry. I don`t know this city. 1")
+# else:
+    # print("Sorry. I don`t know this city. 1")
 
 if response2.status_code == 200:
     w_data2 = response2.json()
     # print(w_data)
-else:
-    print("Sorry. I don`t know this city. 2")
+# else:
+#     print("Sorry. I don`t know this city. 2")
 
 if response3.status_code == 200:
     w_data3 = response3.json()
     # print(w_data)
-else:
-    print("Sorry. I don`t know this city. 3")
+# else:
+#     print("Sorry. I don`t know this city. 3")
 
 if response4.status_code == 200:
     w_data4 = response4.json()
     # print(w_data)
-else:
-    print("Sorry. I don`t know this city. 4")
+# else:
+#     print("Sorry. I don`t know this city. 4")
 
 if response5.status_code == 200:
     w_data5 = response5.json()
     # print(w_data)
-else:
-    print("Sorry. I don`t know this city. 5")
+# else:
+#     print("Sorry. I don`t know this city. 5")
 
 '''
     creating the app
@@ -149,6 +149,8 @@ def change_key():
     city = search.get()
     app.destroy()
     subprocess.run(["Python", "main.py"])
+    reg.reg_app.destroy()
+    office.off_app.destroy()
     url = f'https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={apikey}&lang=ua'
 
 def show_search_label(event):
@@ -356,9 +358,9 @@ hour_sunset, minute_sunset = sunset_time.hour, sunset_time.minute
 # The data
 
 # print information
-print("timezone =", timezone)
+# print("timezone =", timezone)
 # print(f"temperature = {temperature}°C")
-print(f"The date in the {cur_city} = {date_only}")
+# print(f"The date in the {cur_city} = {date_only}")
 # print(f"Sun rises in {cur_city} at {hour_s}:{minute_s} local time")
 
 beg_y = 31
@@ -433,7 +435,7 @@ user_label = customtkinter.CTkLabel(
     master= app,
     font = font_username,
     bg_color = "#5DA7B1",
-    text = f"{text_name} {text_surname}",
+    text = f"{reg.text_name} {reg.text_surname}",
     text_color = "#1f333c"
 )
 user_label.place(x = 380, y = 39)
@@ -528,7 +530,7 @@ create_label(text1 = f"{m_func.find_hours(cur_hour = hour, cur_day = list_date[-
 
 a_hours = count_hours(difference = 0, round = True)
 a_hour = None
-print("A_HOURS =", a_hours)
+# print("A_HOURS =", a_hours)
 if a_hours == "23:00":
     a_hour = "00:00"
     # date += 1
@@ -549,7 +551,7 @@ elif a_hours == "17:00" or a_hours == "18:00" or a_hours == "19:00":
 elif a_hours == "20:00" or a_hours == "21:00" or a_hours == "22:00":
     a_hour = "21:00"
 
-print("a_hour =", a_hour)
+# print("a_hour =", a_hour)
 create_label(text1 = f"{counting_degries(json_main['temp'])}°", x1 = 325 + 26, y1 = 430 + 176, size1 = 30)
 create_label(text1 = f"{counting_degries(int(m_func.searching_time_data(list_json = w_data, this_date = date, this_hours = a_hour, n = 3)[1]))}°", x1 = 325 + 120, y1 = 430 + 176, size1 = 30)
 create_label(text1 = f"{counting_degries(int(m_func.searching_time_data(list_json = w_data, this_date = date, this_hours = a_hour, n = 6)[1]))}°", x1 = 325 + 209, y1 = 430 + 176, size1 = 30)
