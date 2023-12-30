@@ -3,9 +3,13 @@ import modules.path_to_file as path
 from PIL import Image
 import subprocess
 import modules.functions as func
-import registration as reg
+import modules.user_data as data
+# import registration as reg
 
-off_app = customtkinter.CTk()
+print("Office is running")
+subprocess.run(["python", "registration.py"])
+
+off_app = customtkinter.CTkToplevel()
 off_app.resizable(height= False, width= False)
 off_app.config(bg = "#5DA7B1")
 
@@ -51,11 +55,13 @@ text_p1 = customtkinter.CTkLabel(
 )
 text_p1.place(x = 46, y = 108)
 
+print("in  office text_name =", data.text_name, "text_surname = ", data.text_surname)
+
 user_country = customtkinter.CTkLabel(
     master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][0],
+    text = func.select(surname = data.text_surname, name = data.text_name)[0][0],
     font = font_info
 )
 user_country.place(x = 119, y = 157)
@@ -73,7 +79,7 @@ user_city = customtkinter.CTkLabel(
     master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][1],
+    text = func.select(surname = data.text_surname, name = data.text_name)[0][1],
     font = font_info
 )
 user_city.place(x = 121, y = 256)
@@ -91,7 +97,7 @@ user_name = customtkinter.CTkLabel(
     master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][2],
+    text = func.select(surname = data.text_surname, name = data.text_name)[0][2],
     font = font_info
 )
 user_name.place(x = 121, y = 352)
@@ -109,7 +115,7 @@ user_surname = customtkinter.CTkLabel(
     master = off_app,
     text_color = "white",
     bg_color = "#5DA7B1",
-    text = func.select(surname = reg.text_surname, name = reg.text_name)[0][3],
+    text = func.select(surname = data.text_surname, name = data.text_name)[0][3],
     font = font_info
     
 )
@@ -118,6 +124,7 @@ user_surname.place(x = 119, y = 455)
 def button_clicked():
     # subprocess.run(["python", "main.py"])
     off_app.destroy()
+    # reg.save()
       
 button = customtkinter.CTkButton(
     master = off_app,
@@ -143,10 +150,11 @@ def exit():
     # reg = open("registration.py", mode = "w")
     # run_reg = exec(open("registration.py").read)
     off_app.destroy()
-    reg.text_name = None
-    reg.text_surname = None
+    # reg.text_name = None
+    # reg.text_surname = None
     # subprocess.run(["python", "registration.py"])
     subprocess.run(["python", "office.py"])
+    # reg.save()
 
 label = customtkinter.CTkLabel(
     master = off_app,
@@ -170,5 +178,3 @@ img_button = customtkinter.CTkButton(
 )
 
 img_button.place(x = 409 , y = 20)
-
-off_app.mainloop()

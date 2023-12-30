@@ -1,8 +1,9 @@
 import customtkinter
 import sqlite3
-import subprocess
+# import subprocess
+import modules.user_data as data
 
-reg_app = customtkinter.CTk()
+reg_app = customtkinter.CTkToplevel()
 reg_app.resizable(width= False, height= False)
 reg_app.config(
     bg = "#5DA7B1",
@@ -128,7 +129,6 @@ entry4 = customtkinter.CTkEntry(
 
 entry4.place(x = 38, y = 447)
 
-
 def save():
     global text_country, text_city, text_name, text_surname
     db = sqlite3.connect("database.db")
@@ -141,11 +141,13 @@ def save():
     text_name = entry3.get()
     text_surname = entry4.get()    
     
+    data.write_user_data(text_country1 = text_country, text_city1 = text_city, text_name1 = text_name, text_surname1 = text_surname)
+
     # print("reg, 143: text_city =", text_city)
     # print("reg, 144: text_name =", text_name)
     # print("reg, 144: text_surname =", text_surname)
     cursor.execute("INSERT INTO Users (country, city, name, surname) VALUES (?, ?, ?, ?)", (text_country, text_city, text_name, text_surname))
-    # print("close db")
+    print("close db")
     db.commit()
     db.close()
     # print("reg, 147: text_city =", text_city)
@@ -162,8 +164,7 @@ button = customtkinter.CTkButton(
     fg_color = "#1f333c",
     text = "Зберегти",
     corner_radius = 50,
+    # command = save(ent1= entry1, ent2= entry2, ent3= entry3, ent4= entry4, app= reg_app)
     command = save
 )
 button.place(x = 119, y = 546)
-
-reg_app.mainloop()

@@ -1,6 +1,6 @@
 import customtkinter
 import requests
-import office
+# import office
 from PIL import Image
 import registration as reg
 import modules.path_to_file as path
@@ -19,12 +19,13 @@ full_time = str(datetime.now())
 # print("full_time = ", type(full_time))
 time = full_time.split(".")
 # print("time =", time[0])
-date = time[0].split(" ")[0]
+date = time[0].split(" ")[0]  
 # print("date =", date)
 list_date = date.split("-")
 hours = time[0].split(" ")[1]
 # print("hours =", hours)
 # print("main, 26: text_city =", m_func.select(surname = text_surname, name = text_name)[0][1])
+print("surname =", reg.text_surname, "name =", reg.text_name)
 cur_city = m_func.select(surname = reg.text_surname, name = reg.text_name)[0][1]
 
 '''
@@ -109,7 +110,7 @@ if response5.status_code == 200:
 
 
 
-app = customtkinter.CTk()
+app = customtkinter.CTkToplevel()
 app.resizable(height = False, width = False)
 app.config(bg = "#5DA7B1")
 
@@ -149,8 +150,8 @@ def change_key():
     city = search.get()
     app.destroy()
     subprocess.run(["Python", "main.py"])
-    reg.reg_app.destroy()
-    office.off_app.destroy()
+    # reg.reg_app.destroy()
+    # office.off_app.destroy()
     url = f'https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={apikey}&lang=ua'
 
 def show_search_label(event):
